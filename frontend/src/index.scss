@@ -1,0 +1,45 @@
+$colors: (
+    "primary":#123456,
+    "secondary":#856741,
+    "primary-lighter": #21588f,
+    "primary-darker": #0d243c,
+    "secondary-lighter": #e2bd93,
+    "secondary-darker": #967d60,
+    "warning": #ca9024,
+    "error": #b71111,
+    "info": #95a8c3,
+    "success": #12a345,
+    "ultra-light":#f3f3f3,
+    "light":#eaeaea,
+    "mid":#b2b2b2,
+    "dark-mid":#5c5c5c,
+    "dark":#272727
+);
+
+.dismiss {
+    width: 20px;
+    height: 20px;
+    font-size: 18px;
+    background-color: map-get($colors, "dark");
+    color:white;
+    border-radius: 100%;
+    text-align: center;
+    line-height: 18px;
+    cursor:pointer;
+}
+
+
+@each $key, $color in $colors {
+    .bg-#{$key} {
+        background-color: $color;
+    }
+
+    .color-#{$key} {
+        color: $color;
+    }
+
+    .box-#{$key} {
+        background-color: lighten($color, 10%);
+        border: 1px solid $color;
+    }
+}

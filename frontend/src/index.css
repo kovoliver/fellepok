@@ -1,0 +1,103 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    :root {
+        --color-primary:#123456;
+        --color-primary-lighter:#21588f;
+        --color-primary-darker:#0d243c;
+        --color-secondary:#c3a27d;
+        --color-secondary-lighter:#e2bd93;
+        --color-secondary-darker:#967d60;
+        --color-warning:#ca9024;
+        --color-error:#b71111;
+        --color-info:#aac0de;
+        --color-success:#12a345;
+    }
+
+    .input {
+        @apply px-2 py-1 rounded-md transition-all border-2 border-gray-300;
+        background-color:white;
+    }
+
+    .input:focus {
+        outline:0;
+        border-color:var(--color-primary)!important;
+    }
+
+    .btn {
+        @apply px-2 py-1 my-3 rounded-md transition-all border-2;
+        border-color:var(--color-primary-darker);
+        background-color:var(--color-primary);
+        color:white;
+        cursor: pointer;
+    }
+
+    .btn:active {
+        background-color:var(--color-primary-lighter);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        @apply py-1.5;
+    }
+
+    h1 {
+        @apply xl:text-3xl lg:text-3xl md:text-3xl sm:text-2xl text-2xl;
+        color:var(--color-primary);
+    }
+
+    h2 {
+        @apply xl:text-2xl lg:text-2xl md:text-2xl sm:text-xl text-xl;
+        color:var(--color-primary-lighter);
+    }
+
+    h3 {
+        color:var(--color-secondary-darker);
+    }
+
+    h4 {
+        @apply text-gray-600;
+    }
+
+    h5 {
+        @apply text-gray-500;
+    }
+
+    h6 {
+        @apply text-gray-400;
+    }
+
+    h3, h4, h5, h6 {
+        @apply xl:text-xl lg:text-xl md:text-xl sm:text-lg text-lg;
+    }
+
+    .container-xl {
+        @apply xl:w-320 lg:w-256 md:w-192 sm:w-160;
+    }
+
+    .container-lg {
+        @apply lg:w-256 md:w-192 sm:w-160;
+    }
+
+    .container-md {
+        @apply md:w-192 sm:w-160;
+    }
+
+    .container-sm {
+        @apply sm:w-160;
+    }
+
+    .selected-menu {
+        background-color: var(--color-secondary-darker)!important;
+    }
+
+    nav li {
+        @apply h-full flex items-center;
+    }
+
+    nav a {
+        color:white!important;
+    }
+}
