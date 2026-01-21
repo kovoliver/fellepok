@@ -24,7 +24,7 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="w-100 mx-auto bg-gray-100 p-4 border-1 border-gray-200 text-center mt-5">
+        <div className="maxw-300 box-light margin-auto p-md">
             <h2>Bejelentkezés</h2>
 
             <h3>Email cím</h3>
@@ -32,7 +32,7 @@ export default function LoginPage() {
                 onChange={e => setEmail(e.target.value)}
                 name="email"
                 type="text" value={email}
-                className="input w-full"
+                className="input-sm input-primary wp-100"
             />
 
             <h3>Jelszó</h3>
@@ -40,10 +40,10 @@ export default function LoginPage() {
                 onChange={e => setPass(e.target.value)}
                 name="pass"
                 type="password" value={pass}
-                className="input w-full"
+                className="input-sm input-primary wp-100"
             />
 
-            <button className="btn" onClick={login}>
+            <button className="input-sm btn-primary d-block margin-auto mt-md" onClick={login}>
                 Bejelentkezés
             </button>
         </div>

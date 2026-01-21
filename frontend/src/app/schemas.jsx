@@ -96,3 +96,22 @@ export const profileSchema = Joi.object({
         "string.min":"Az ajtó mező nem maradhat üres!"
     })
 });
+
+export const passSchema = Joi.object({
+    currentPass:Joi.string().min(6).empty("").required().messages({
+        "string.min":"A jelszónak minimum hat karakteresnek kell lennie!",
+        "string.empty":"A jelszó mező nem lehet üres!",
+        "any.required":"A jelszó mező kötelező!"
+    }),
+    newPass: Joi.string().min(6).empty("").required().messages({
+        "string.min":"A jelszónak minimum hat karakteresnek kell lennie!",
+        "string.empty":"A jelszó mező nem lehet üres!",
+        "any.required":"A jelszó mező kötelező!"
+    }),
+    newPassAgain:Joi.string().valid(Joi.ref("newpass")).required()
+    .messages({
+        "any.only": "A két jelszó nem egyezik meg!",
+        "string.empty": "Kérjük ismételje meg a jelszót.",
+        "any.required": "Kérjük ismételje meg a jelszót."
+    })
+});

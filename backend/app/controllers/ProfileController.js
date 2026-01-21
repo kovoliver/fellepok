@@ -17,6 +17,11 @@ class ProfileController extends Controller {
             "/profile", this.saveProfile.bind(this),
             tokenHandler.authenticate.bind(tokenHandler)
         );
+
+        this.http.patch(
+            "/change-pass", this.changePass.bind(this),
+            tokenHandler.authenticate.bind(tokenHandler)
+        );
     }
 
     async getProfileByID(req, res) {
@@ -35,7 +40,7 @@ class ProfileController extends Controller {
     async saveProfile(req, res) {
         try {
             const { error, value } = this.schema.validate(req.body, {abortEarly:false});
-            
+
             if(error) {
                 return res.status(400)
                 .json({
@@ -45,6 +50,21 @@ class ProfileController extends Controller {
 
             const response = await this.model.saveProfile(
                 value, req.user.userID
+            );
+
+            res.status(response.status).json({message:response.message});
+        } catch(err) {
+            res.status(err.status||500)
+            .json({message:err.message||'Hiba történt, kérem próbálkozzon később!'});
+        }
+    }
+
+    async changePass(req, res) {
+        try {
+            const response = await this.model.changePass(
+                req.user.userID, 
+                req.body.currentPass,
+                req.body.newPass
             );
 
             res.status(response.status).json({message:response.message});

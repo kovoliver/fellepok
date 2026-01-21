@@ -6,22 +6,22 @@ function GuestNav() {
 
     return(
         <>
-            <nav className="h-20 bg-primary">
-                <ul className="h-20 flex items-center justify-center">
+            <nav className="h-80 bg-primary">
+                <ul className="h-80 d-flex jc-center">
                     <li className={selectMenu(location.pathname, "/")}>
-                        <Link className="p-2 text-white" to={"/"}>Kezdőlap</Link>
+                        <Link className="p-sm text-white" to={"/"}>Kezdőlap</Link>
                     </li>
                     <li className={selectMenu(location.pathname, "/rolunk")}>
-                        <Link className="p-2" to={"/rolunk"}>Rólunk</Link>
+                        <Link className="p-sm" to={"/rolunk"}>Rólunk</Link>
                     </li>
                     <li className={selectMenu(location.pathname, "/regisztracio")}>
-                        <Link className="p-2" to={"/regisztracio"}>Regisztráció</Link>
+                        <Link className="p-sm" to={"/regisztracio"}>Regisztráció</Link>
                     </li>
                     <li className={selectMenu(location.pathname, "/bejelentkezes")}>
-                        <Link className="p-2" to={"/bejelentkezes"}>Bejelentkezés</Link>
+                        <Link className="p-sm" to={"/bejelentkezes"}>Bejelentkezés</Link>
                     </li>
                     <li className={selectMenu(location.pathname, "/kapcsolat")}>
-                        <Link className="p-2" to={"/kapcsolat"}>Kapcsolat</Link>
+                        <Link className="p-sm" to={"/kapcsolat"}>Kapcsolat</Link>
                     </li>
                 </ul>
             </nav>

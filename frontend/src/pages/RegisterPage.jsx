@@ -53,13 +53,14 @@ function RegisterPage() {
 
     return (
         <div className="my-10">
-            <div className="w-100 mx-auto bg-gray-100 p-4 border-1 border-gray-200 text-center">
+            <div className="maxw-400 box-light margin-auto p-md">
                 <h2>Regisztráció</h2>
 
                 <h3>Regisztráció típusa</h3>
                 <b className="color-error">{errors.role ? errors.role : ""}</b>
+
                 <select onChange={e=>handleChange(e, setFormData, setErrors, regSchema)}
-                name="role" className="input w-full">
+                name="role" className="input-sm input-primary wp-100">
                     <option value="-">-</option>
                     <option value="ARTIST">Fellépő</option>
                     <option value="CUSTOMER">Megrendelő</option>
@@ -72,7 +73,7 @@ function RegisterPage() {
                     onChange={e => handleChange(e, setFormData, setErrors, regSchema)}
                     name="email"
                     type="text" value={formData.email}
-                    className="input w-full"
+                    className="input-sm input-primary wp-100"
                 />
 
                 <h3>Jelszó</h3>
@@ -81,8 +82,8 @@ function RegisterPage() {
                     onChange={e => handleChange(e, setFormData, setErrors, regSchema)}
                     name="pass"
                     type="password" value={formData.pass}
-                    className="input w-full"
-                /> <br />
+                    className="input-sm input-primary wp-100"
+                />
 
                 <h3>Jelszó újra</h3>
                 <b className="color-error">
@@ -94,10 +95,10 @@ function RegisterPage() {
                     onChange={e => handleChange(e, setFormData)}
                     name="passAgain"
                     type="password" value={formData.passAgain}
-                    className="input w-full"
-                /> <br />
+                    className="input-sm input-primary wp-100"
+                />
 
-                <button className="btn" onClick={register}>
+                <button className="input-sm btn-primary d-block margin-auto mt-md" onClick={register}>
                     Regisztráció
                 </button>
             </div>
