@@ -13,6 +13,7 @@ class UserHandlerController extends Controller {
         this.http.post("/register", this.register.bind(this));
         this.http.get("/activate-user/:userID/:activationString", this.activateRegistration.bind(this));
         this.http.post("/login", this.login.bind(this));
+        this.http.post("/logout", this.logout.bind(this));
     }
 
     async checkRegisterData(user) {
@@ -87,6 +88,21 @@ class UserHandlerController extends Controller {
 
             res.status(response.status).json({message:response.message});
         } catch(err) {
+            res.status(err.status||500)
+            .json({message:err.message||'Hiba történt, kérem próbálkozzon később!'});
+        }
+    }
+
+    async logout(req, res) {
+        try {
+            const cookieOptions = {
+                expires:Date.now(), httpOnly:true, 
+                secure:true, sameSite:"none"
+            };
+
+            res.clearCookie("refreshToken", null, cookieOptions);
+            res.status(200).json({logout:true});
+        }  catch(err) {
             res.status(err.status||500)
             .json({message:err.message||'Hiba történt, kérem próbálkozzon később!'});
         }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { passSchema, profileSchema } from "../../app/schemas";
+import { passSchema, profileSchema, regSchema } from "../../app/schemas";
 import { handleChange, validateForm } from "../../app/functions";
 import { useContext } from "react";
 import { GlobalContext } from "../../App";
@@ -33,6 +33,18 @@ export default function Profile() {
         currentPass: "",
         newPass: "",
         newPassAgain: ""
+    });
+
+    const [emailData, setEmailData] = useState({
+        email: "",
+        emailAgain: "",
+        pass: ""
+    });
+
+    const [emailErrors, setEmailErrors] = useState({
+        email: "",
+        emailAgain: "",
+        pass: ""
     });
 
     const [errors, setErrors] = useState({});
@@ -89,7 +101,39 @@ export default function Profile() {
             }, gc);
 
             gc.setMessages(response.message);
+
+            setPassData({
+                currentPass: "",
+                newPass: "",
+                newPassAgain: ""
+            });
         } catch(err) {
+            gc.setMessages(err.message || "Hiba történt, próbálkozzon később!", "error");
+        }
+    };
+
+    const changeEmail = async (e)=> {
+        e.preventDefault();
+
+        try {
+            const response = await fetchAPI(`${sBaseUrl}/change-email`, {
+                method:"PATCH",
+                credentials: "include",
+                headers: {
+                    'Content-type': "application/json",
+                    'authorization': `Bearer ${gc.token}`
+                },
+                body:JSON.stringify(emailData)
+            });
+
+            gc.setMessages(response.message);
+
+            setEmailData({
+                email: "",
+                emailAgain: "",
+                pass: ""
+            });
+        }catch(err) {
             gc.setMessages(err.message || "Hiba történt, próbálkozzon később!", "error");
         }
     };
@@ -331,6 +375,55 @@ export default function Profile() {
                         />
 
                         <button onClick={changePass}
+                        className="input-sm btn-primary d-block mt-md margin-auto">
+                            Módosítás
+                        </button>
+                    </form>
+                </div>
+
+                <div className="col-lg-6 col-md-6 col-sm-6 pr-md">
+                    <form className="mb-lg box-light p-md">
+                        <h2 className="text-center">Email cím módosítása</h2>
+
+                        <div className="font-weight-600 mb-xs">
+                            Új email cím
+                        </div>
+                        <b className="color-error">{emailErrors.email ? emailErrors.email : ""}</b>
+
+                        <input
+                            type="text" name="email"
+                            onChange={e => handleChange(e, setEmailData, setEmailErrors, regSchema)}
+                            value={emailData.email}
+                            className="input-xs input-primary wp-100"
+                        />
+
+                        <div className="font-weight-600 mb-xs">
+                            Új email újra
+                        </div>
+                        <b className="color-error">
+                            {emailData.email !== emailData.emailAgain && emailData.emailAgain.length > 0 ? 
+                            "A két email cím nem egyezik!" : ""}
+                        </b>
+
+                        <input
+                            type="text" name="emailAgain"
+                            onChange={e => handleChange(e, setEmailData)}
+                            value={emailData.emailAgain}
+                            className="input-xs input-primary wp-100"
+                        />
+
+                        <div className="font-weight-600 mb-xs">
+                            Jelszó
+                        </div>
+
+                        <input
+                            type="password" name="pass"
+                            onChange={e=>handleChange(e, setEmailData)}
+                            value={emailData.pass}
+                            className="input-xs input-primary wp-100"
+                        />
+
+                        <button onClick={changeEmail}
                         className="input-sm btn-primary d-block mt-md margin-auto">
                             Módosítás
                         </button>

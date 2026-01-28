@@ -1,5 +1,5 @@
 import Controller from "../framework/Controller.js";
-import { profileSchema } from "./schemas.js";
+import { profileSchema, regSchema } from "./schemas.js";
 import ProfileModel from "../models/ProfileModel.js";
 import tokenHandler from "../framework/JWToken.js";
 
@@ -20,6 +20,11 @@ class ProfileController extends Controller {
 
         this.http.patch(
             "/change-pass", this.changePass.bind(this),
+            tokenHandler.authenticate.bind(tokenHandler)
+        );
+
+        this.http.patch(
+            "/change-email", this.changeEmail.bind(this),
             tokenHandler.authenticate.bind(tokenHandler)
         );
     }
@@ -65,6 +70,30 @@ class ProfileController extends Controller {
                 req.user.userID, 
                 req.body.currentPass,
                 req.body.newPass
+            );
+
+            res.status(response.status).json({message:response.message});
+        } catch(err) {
+            res.status(err.status||500)
+            .json({message:err.message||'Hiba történt, kérem próbálkozzon később!'});
+        }
+    }
+
+    async changeEmail(req, res) {
+        try {
+            const email = req.body.email ? req.body.email.trim() : "";
+            const pass = req.body.pass ? req.body.pass.trim() : "";
+
+            const schema = regSchema.extract("email");
+            const { error } = schema.validate(email);
+
+            if(error?.details[0]?.message) {
+                return res.status(400).json({message:error.details[0].message});
+            }
+
+            const response = await this.model.changeEmail(
+                req.user.userID,
+                email, pass
             );
 
             res.status(response.status).json({message:response.message});
