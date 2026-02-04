@@ -97,6 +97,28 @@ export const profileSchema = Joi.object({
     })
 });
 
+//(http|https):\/\/[\w\-\_]{0,255}\.[\w]{2,6}
+
+export const userServiceSchema = Joi.object({
+    serviceType:Joi.string().empty("").required().messages({
+        "string.base":"A szolgáltatás típusának karakterláncnak kell lennie!",
+        "string.empty":"A szolgáltatás elnevezése nem maradhat üres!",
+        "any.required":"A szolgáltatás típusa kötelező mező!"
+    }),
+    title:Joi.string().min(10).max(100).required().messages({
+        "string.base":"A hirdetés címének karakterláncnak kell lennie!",
+        "string.min":"A hirdetés címe minimum 10 karakteres kell, hogy legyen!",
+        "string.max":"A hirdetés címe nem lehet hosszabb, mint 100 karakter!",
+        "any.required":"A szolgáltatás típusa kötelező mező!"
+    }),
+    description:Joi.string().min(50).max(5000).required().messages({
+        "string.base":"A hirdetés leírásának karakterláncnak kell lennie!",
+        "string.min":"A hirdetés leírása minimum 50 karakteres kell, hogy legyen!",
+        "string.max":"A hirdetés leírása nem lehet hosszabb, mint 5000 karakter!",
+        "any.required":"A hirdetés leírása típusa kötelező mező!"
+    }),
+});
+
 // const { error, value } = regSchema.schema.validate({
 //     email:"email@email.hu",
 //     pass:"asdfasdfasdf",

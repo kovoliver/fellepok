@@ -13,6 +13,8 @@ import TwoFactorLoginPage from "./pages/TwoFactorLoginPage";
 import LoginPage from "./pages/LoginPage";
 import Profile from "./pages/common/Profile";
 import ArtistsLayout from "./layout/ArtistsLayout";
+import ServicesPage from "./pages/artist/ServicesPage";
+import ServicePage from "./pages/artist/ServicePage";
 
 /*
     Globális állapotkezelés
@@ -50,11 +52,12 @@ function App() {
                         <Route path="/bejelentkezes" element={<LoginPage/>}/>
                         <Route path="/confirm-registration/:activationString/:userID" element={<ActivateRegistration/>}/>
                         <Route path="/two-factor-auth/:key/:userID" element={<TwoFactorLoginPage/>}/>
-                        
                     </Route>
 
                     <Route element={<ArtistsLayout/>}>
                         <Route path="/artist/profile" element={<Profile/>}/>
+                        <Route path="/artist/services" element={<ServicesPage/>}/>
+                        <Route path="/artist/service" element={<ServicePage/>}/>
                     </Route>
                 </Routes>
             </BrowserRouter>
