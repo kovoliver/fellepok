@@ -37,4 +37,17 @@ export function getDirName(meta = null) {
     return baseDir;
 }
 
+export function checkSchema(data, schema) {
+    const { error, value } = schema.validate(data, {abortEarly:false});
+
+    if(error) {
+        throw {
+            status:400,
+            message:error.details.map(e=>e.message)
+        }
+    }
+
+    return value;
+}
+
 export const __dirname = getDirName();

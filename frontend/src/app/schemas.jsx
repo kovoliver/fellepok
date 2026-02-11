@@ -115,3 +115,60 @@ export const passSchema = Joi.object({
         "any.required": "Kérjük ismételje meg a jelszót."
     })
 });
+
+export const userServiceSchema = Joi.object({
+    serviceType:Joi.number().min(1).required().messages({
+        "number.min":"A szolgáltatás típusát kötelező kiválasztani!",
+        "number.base":"A szolgáltatás típusa nem megfelelő!",
+        "any.required":"A szolgáltatás típusa kötelező mező!"
+    }),
+    title:Joi.string().min(10).max(100).required().messages({
+        "string.base":"A hirdetés címének karakterláncnak kell lennie!",
+        "string.min":"A hirdetés címe minimum 10 karakteres kell, hogy legyen!",
+        "string.max":"A hirdetés címe nem lehet hosszabb, mint 100 karakter!",
+        "any.required":"A szolgáltatás típusa kötelező mező!",
+        "string.empty":"A cím mező nem maradhat üres!"
+    }),
+    description:Joi.string().min(50).max(5000).required().messages({
+        "string.base":"A hirdetés leírásának karakterláncnak kell lennie!",
+        "string.min":"A hirdetés leírása minimum 50 karakteres kell, hogy legyen!",
+        "string.max":"A hirdetés leírása nem lehet hosszabb, mint 5000 karakter!",
+        "any.required":"A hirdetés leírása típusa kötelező mező!",
+        "string.empty":"A leírás mező nem maradhat üres!"
+    }),
+    webpage:Joi.string().regex(/(http|https):\/\/[\w\-\_]{0,255}\.[\w]{2,6}/).messages({
+        "string.base":"A weboldalnak karakterláncnak kell lennie!",
+        "string.pattern.base":"A weboldal formátuma nem megfelelő!",
+        "string.empty":"A weboldal mező nem maradhat üres!"
+    }),
+    facebook:Joi.string().regex(/https\:\/\/(facebook)\.(com)\/[\w]{1,50}/).messages({
+        "string.base":"A Facebook oldalnak karakterláncnak kell lennie!",
+        "string.pattern.base":"A Facebook oldal formátuma nem megfelelő!",
+        "string.empty":"A Facebook oldal mező nem maradhat üres!"
+    }),
+    tiktok:Joi.string().regex(/https\:\/\/(tiktok)\.(com)\/[\w]{1,50}/).messages({
+        "string.base":"A TikTok oldalnak karakterláncnak kell lennie!",
+        "string.pattern.base":"A TikTok oldal formátuma nem megfelelő!",
+        "string.empty":"A TikTok oldal mező nem maradhat üres!"
+    }),
+    youtube:Joi.string().regex(/https\:\/\/(youtube)\.(com)\/[\w]{1,50}/).messages({
+        "string.base":"A YouTube oldalnak karakterláncnak kell lennie!",
+        "string.pattern.base":"A YouTube oldal formátuma nem megfelelő!",
+        "string.empty":"A YouTube oldal mező nem maradhat üres!"
+    }),
+    instagram:Joi.string().regex(/https\:\/\/(instagram)\.(com)\/[\w]{1,50}/).messages({
+        "string.base":"Az Instagram oldalnak karakterláncnak kell lennie!",
+        "string.pattern.base":"Az Instagram oldal formátuma nem megfelelő!",
+        "string.empty":"Az Instagram oldal mező nem maradhat üres!"
+    }),
+    x_twitter:Joi.string().regex(/https\:\/\/(x)\.(com)\/[\w]{1,50}/).messages({
+        "string.base":"Az X/Twitter oldalnak karakterláncnak kell lennie!",
+        "string.pattern.base":"Az X/Twitter oldal formátuma nem megfelelő!",
+        "string.empty":"Az X/Twitter oldal mező nem maradhat üres!"
+    }),
+     linkedin:Joi.string().regex(/https\:\/\/(linkedin)\.(com)\/[\w]{1,50}/).messages({
+        "string.base":"A LinkedIn oldalnak karakterláncnak kell lennie!",
+        "string.pattern.base":"A LinkedIn oldal formátuma nem megfelelő!",
+        "string.empty":"A LinkedIn oldal mező nem maradhat üres!"
+    }),
+});

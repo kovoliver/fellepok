@@ -2,25 +2,41 @@ import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../App";
 import { fetchAPI } from "../../app/functions";
 import { sBaseUrl } from "../../app/url";
+import { handleChange } from "../../app/functions";
+import { userServiceSchema } from "../../app/schemas";
+import CheckInputComp from "../../components/CheckInputComp";
 
 function ServicePage() {
     const gc = useContext(GlobalContext);
     const [serviceTypes, setServiceTypes] = useState([]);
 
-    const serviceData = {
-        serviceType:"",
-        title:"",
-        description:"",
-        webpage:"",
-        facebook:"",
-        tiktok:"",
-        youtube:"",
-        instagram:"",
-        x_twitter:"",
-        linkedin:""
-    };
+    const [serviceData, setServiceData] = useState({
+        serviceType: "",
+        title: "",
+        description: "",
+        webpage: "",
+        facebook: "",
+        tiktok: "",
+        youtube: "",
+        instagram: "",
+        x_twitter: "",
+        linkedin: ""
+    });
 
-    const getServices = async ()=> {
+    const [serviceErrors, setServiceErrors] = useState({
+        serviceType: "",
+        title: "",
+        description: "",
+        webpage: "",
+        facebook: "",
+        tiktok: "",
+        youtube: "",
+        instagram: "",
+        x_twitter: "",
+        linkedin: ""
+    });
+
+    const getServices = async () => {
         try {
             const response = await fetchAPI(`${sBaseUrl}/service_types`);
             setServiceTypes(response.data);
@@ -29,38 +45,45 @@ function ServicePage() {
         }
     };
 
-    const createService = async ()=> {
+    const createService = async () => {
         try {
             const response = await fetchAPI(`${sBaseUrl}/service`, {
-                method:"POST",
-                credentials:"include",
-                headers:{
-                    "Content-type":"application/json",
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-type": "application/json",
                     'authorization': `Bearer ${gc.token}`
                 },
-                body:JSON.stringify(serviceData)
+                body: JSON.stringify(serviceData)
             });
 
             gc.setMessages(response.message);
-        }  catch (err) {
+        } catch (err) {
+            console.log(err.message);
             gc.setMessages(err.message || "Hiba történt, próbálkozzon később!", "error");
         }
     };
 
-    useEffect(()=> {
+    useEffect(() => {
         getServices();
     }, []);
 
-    return(
+    return (
         <div className="my-xl text-center">
             <form className="row">
                 <div className="col-md-6 p-md">
                     <div className="box-light p-md">
-                        <h3>Szolgáltatás típusa</h3>
-                        <select className="input-xs input-primary wp-80" name="serviceType">
+                        <div className="font-weight-600 mb-xs">
+                            Szolgáltatás típusa
+                        </div>
+
+                        <b className="color-error">{serviceErrors.serviceType ? serviceErrors.serviceType : ""}</b>
+
+                        <select onChange={e => handleChange(e, setServiceData, setServiceErrors, userServiceSchema)}
+                            value={serviceData.serviceType} className="input-xs input-primary wp-80" name="serviceType">
                             <option value="-">Válassz típust!</option>
                             {
-                                serviceTypes.map((service, i)=>
+                                serviceTypes.map((service, i) =>
                                     <option key={i} value={service.typeID}>
                                         {service.typeName}
                                     </option>
@@ -68,68 +91,89 @@ function ServicePage() {
                             }
                         </select>
 
-                        <h3>Hirdetés címe</h3>
-                        <input 
-                            className="input-xs input-primary wp-80" 
-                            type="text" name="title"
+                        <CheckInputComp
+                            data={serviceData}
+                            setData={setServiceData}
+                            schema={userServiceSchema}
+                            title="Hirdetés címe"
+                            name="title"
                         />
 
-                        <h3>Leírás</h3>
-                        <textarea 
-                            className="input-xs input-primary wp-80 minh-350" 
-                            name="description"></textarea>
+                        <div className="font-weight-600 mb-xs">
+                            Leírás
+                        </div>
+                        <b className="color-error">{serviceErrors.description ? serviceErrors.description : ""}</b>
+
+                        <textarea
+                            className="input-xs input-primary wp-80 minh-350"
+                            onChange={e => handleChange(e, setServiceData, setServiceErrors, userServiceSchema)}
+                            value={setServiceData.description} name="description"></textarea>
                     </div>
                 </div>
 
                 <div className="col-md-6 p-md">
                     <div className="box-light p-md">
-                        <h3>Weboldal</h3>
-                        <input 
-                            className="input-xs input-primary wp-80" 
-                            type="text" name="webpage"
+                        <CheckInputComp
+                            data={serviceData}
+                            setData={setServiceData}
+                            schema={userServiceSchema}
+                            title="Weboldal"
+                            name="webpage"
                         />
 
-                        <h3>Facebook</h3>
-                        <input 
-                            className="input-xs input-primary wp-80" 
-                            type="text" name="facebook"
+                        <CheckInputComp
+                            data={serviceData}
+                            setData={setServiceData}
+                            schema={userServiceSchema}
+                            title="Facebook"
+                            name="facebook"
                         />
 
-                        <h3>TikTok</h3>
-                        <input 
-                            className="input-xs input-primary wp-80" 
-                            type="text" name="tiktok"
+                         <CheckInputComp
+                            data={serviceData}
+                            setData={setServiceData}
+                            schema={userServiceSchema}
+                            title="TikTok"
+                            name="tiktok"
                         />
 
-                        <h3>YouTube</h3>
-                        <input 
-                            className="input-xs input-primary wp-80" 
-                            type="text" name="youtube"
+                        <CheckInputComp
+                            data={serviceData}
+                            setData={setServiceData}
+                            schema={userServiceSchema}
+                            title="YouTube"
+                            name="youtube"
                         />
 
-                        <h3>Instagram</h3>
-                        <input 
-                            className="input-xs input-primary wp-80" 
-                            type="text" name="instagram"
+                        <CheckInputComp
+                            data={serviceData}
+                            setData={setServiceData}
+                            schema={userServiceSchema}
+                            title="Instagram"
+                            name="instagram"
                         />
 
-                        <h3>X/Twitter</h3>
-                        <input 
-                            className="input-xs input-primary wp-80" 
-                            type="text" name="x_twitter"
+                        <CheckInputComp
+                            data={serviceData}
+                            setData={setServiceData}
+                            schema={userServiceSchema}
+                            title="X/Twitter"
+                            name="x_twitter"
                         />
 
-                        <h3>LinkedIn</h3>
-                        <input 
-                            className="input-xs input-primary wp-80" 
-                            type="text" name="linkedin"
+                        <CheckInputComp
+                            data={serviceData}
+                            setData={setServiceData}
+                            schema={userServiceSchema}
+                            title="LinkedIn"
+                            name="linkedin"
                         />
                     </div>
                 </div>
             </form>
 
-            <button onClick={createService} 
-            className="input-sm btn-primary">
+            <button onClick={createService}
+                className="input-sm btn-primary">
                 Mentés!
             </button>
         </div>
